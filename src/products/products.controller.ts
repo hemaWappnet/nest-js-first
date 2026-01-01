@@ -5,22 +5,26 @@ import {
   Param,
   Post,
   Query,
-  UsePipes,
-  ValidationPipe,
   Patch,
   Delete,
   HttpCode,
+  UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/createProduct.dto';
 import { UpdateProductDto } from './dtos/updateProduct.dto';
+import { ApiKeyGuard } from '../api-key/api-key.guard';
 
+@UseGuards(ApiKeyGuard)
 @Controller('products')
 export class ProductsController {
+  private readonly logger = new Logger(ProductsController.name);
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
   getAllProducts() {
+    this.logger.log('Getting all products');
     return this.productsService.getAllProducts();
   }
 
@@ -37,13 +41,11 @@ export class ProductsController {
   }
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   createProduct(@Body() product: CreateProductDto) {
     return this.productsService.createProduct(product);
   }
 
   @Patch(':id')
-  @UsePipes(new ValidationPipe({ whitelist: true }))
   updateProduct(
     @Param('id') id: string,
     @Body() updateProductDto: UpdateProductDto,

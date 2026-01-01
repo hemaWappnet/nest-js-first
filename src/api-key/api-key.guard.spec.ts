@@ -1,17 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { ProductsController } from './products.controller';
-import { ProductsService } from './products.service';
-import { ApiKeyGuard } from '../api-key/api-key.guard';
+import { ApiKeyGuard } from './api-key.guard';
 import { ConfigService } from '@nestjs/config';
+import { Test, TestingModule } from '@nestjs/testing';
 
-describe('ProductsController', () => {
-  let controller: ProductsController;
+describe('ApiKeyGuard', () => {
+  let guard: ApiKeyGuard;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [ProductsController],
       providers: [
-        ProductsService,
         ApiKeyGuard,
         {
           provide: ConfigService,
@@ -25,10 +21,10 @@ describe('ProductsController', () => {
       ],
     }).compile();
 
-    controller = module.get<ProductsController>(ProductsController);
+    guard = module.get<ApiKeyGuard>(ApiKeyGuard);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(guard).toBeDefined();
   });
 });
