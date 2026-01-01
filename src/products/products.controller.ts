@@ -7,9 +7,13 @@ import {
   Query,
   UsePipes,
   ValidationPipe,
+  Patch,
+  Delete,
+  HttpCode,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/createProduct.dto';
+import { UpdateProductDto } from './dtos/updateProduct.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -36,5 +40,20 @@ export class ProductsController {
   @UsePipes(new ValidationPipe({ whitelist: true }))
   createProduct(@Body() product: CreateProductDto) {
     return this.productsService.createProduct(product);
+  }
+
+  @Patch(':id')
+  @UsePipes(new ValidationPipe({ whitelist: true }))
+  updateProduct(
+    @Param('id') id: string,
+    @Body() updateProductDto: UpdateProductDto,
+  ) {
+    return this.productsService.updateProduct(id, updateProductDto);
+  }
+
+  @HttpCode(204)
+  @Delete(':id')
+  deleteProduct(@Param('id') id: string) {
+    return this.productsService.deleteProduct(id);
   }
 }
