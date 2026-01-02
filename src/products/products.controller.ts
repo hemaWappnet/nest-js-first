@@ -14,9 +14,9 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dtos/createProduct.dto';
 import { UpdateProductDto } from './dtos/updateProduct.dto';
-import { ApiKeyGuard } from '../api-key/api-key.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
-@UseGuards(ApiKeyGuard)
+@UseGuards(JwtAuthGuard)
 @Controller('products')
 export class ProductsController {
   private readonly logger = new Logger(ProductsController.name);
