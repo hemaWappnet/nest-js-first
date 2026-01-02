@@ -30,7 +30,6 @@ export class ProductsController {
 
   @Get('search')
   getProductsBySearch(@Query('q') query: string) {
-    console.log('Search query:', query);
     return this.productsService.getAllProducts(query);
   }
 
