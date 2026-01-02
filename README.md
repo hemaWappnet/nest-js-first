@@ -25,6 +25,9 @@ Postman Documentation: https://documenter.getpostman.com/view/27071391/2sBXVcjsG
    DB_PASSWORD=your-db-password
    DB_DATABASE=your-db-name
    DB_SYNCHRONIZE=true # Auto-sync schema in dev (disable in prod)
+
+   # JWT configuration
+   JWT_SECRET=your-super-secret-jwt-key-here
    ```
 
    Ensure PostgreSQL is running and the database exists.
