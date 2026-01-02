@@ -1,26 +1,31 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
-import { ApiKeyGuard } from '../api-key/api-key.guard';
-import { ConfigService } from '@nestjs/config';
+import { Product } from './product.entity';
 
 describe('ProductsController', () => {
   let controller: ProductsController;
+  let mockRepository: Partial<Repository<Product>>;
 
   beforeEach(async () => {
+    mockRepository = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+      create: jest.fn(),
+      save: jest.fn(),
+      delete: jest.fn(),
+      count: jest.fn(),
+    };
+
     const module: TestingModule = await Test.createTestingModule({
       controllers: [ProductsController],
       providers: [
         ProductsService,
-        ApiKeyGuard,
         {
-          provide: ConfigService,
-          useValue: {
-            get: jest.fn((key: string) => {
-              if (key === 'API_KEY') return 'test';
-              return null;
-            }),
-          },
+          provide: getRepositoryToken(Product),
+          useValue: mockRepository,
         },
       ],
     }).compile();
