@@ -16,7 +16,6 @@ Postman Documentation: https://documenter.getpostman.com/view/27071391/2sBXVcjsG
    Create a `.env` file in the root directory and add:
 
    ```
-   API_KEY=your-secret-api-key-here
    PORT=3000
 
    # Database configuration
@@ -26,6 +25,9 @@ Postman Documentation: https://documenter.getpostman.com/view/27071391/2sBXVcjsG
    DB_PASSWORD=your-db-password
    DB_DATABASE=your-db-name
    DB_SYNCHRONIZE=true # Auto-sync schema in dev (disable in prod)
+
+   # JWT configuration
+   JWT_SECRET=your-super-secret-jwt-key-here
    ```
 
    Ensure PostgreSQL is running and the database exists.
@@ -48,7 +50,7 @@ Postman Documentation: https://documenter.getpostman.com/view/27071391/2sBXVcjsG
 ## Features
 
 - Modular NestJS architecture with TypeORM for PostgreSQL.
+- JWT-based authentication with Passport.
 - Input validation using class-validator.
-- API key authentication.
 - Request logging middleware.
 - Auto-seeding of initial products on startup.
